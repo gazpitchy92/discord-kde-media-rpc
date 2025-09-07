@@ -134,11 +134,3 @@ Check system logs for errors:
 ```bash
 journalctl --user -u discord-kde-rpc.service -f
 ```
-
-## Contributing
-
-Feel free to submit issues and enhancement requests on the [GitHub repository](https://github.com/gazpitchy92/discord-kde-media-rpc).
-
-## License
-
-[Add your license information here]
