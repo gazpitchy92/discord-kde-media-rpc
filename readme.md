@@ -41,7 +41,7 @@ To automatically start the RPC service when your system boots:
 #### Using KDE Autostart Settings
 
 1. Open **System Settings**
-2. Navigate to **system** → **Autostart**
+2. Navigate to **Startup and Shutdown** → **Autostart**
 3. Click **Add...** → **Add Application**
 4. Browse and select `get.sh` from the project directory
 5. Click **OK**
@@ -102,8 +102,7 @@ systemctl --user status discord-kde-rpc.service
 
 - KDE Plasma desktop environment
 - Discord desktop application
-- Python 3.x
-- DBus support
+- playerctl
 
 ## Troubleshooting
 
