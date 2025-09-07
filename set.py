@@ -16,9 +16,19 @@ def recv(client):
 def main():
     uid = os.getuid()
     path = f"/run/user/{uid}/discord-ipc-0"
-    client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    client.connect(path)
-
+    
+    while True:
+        if os.path.exists(path):
+            try:
+                client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                client.connect(path)
+                break
+            except ConnectionRefusedError:
+                client.close()
+                print("Discord not launched yet, waiting...")
+        else:
+            print("Discord not launched yet, waiting...")
+        time.sleep(5)
     base_dir = os.path.dirname(os.path.abspath(__file__))
     appid_file = os.path.join(base_dir, "discord.appid")
     playing_file = os.path.join(base_dir, "playing.txt")
@@ -54,8 +64,8 @@ def main():
 
     signal.signal(signal.SIGINT, cleanup)
     signal.signal(signal.SIGTERM, cleanup)
-    print("Presence active. Press CTRL+C to exit.")
 
+    print("Presence active. Press CTRL+C to exit.")
     last_text = ""
     while True:
         try:
