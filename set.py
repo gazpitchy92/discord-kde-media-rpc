@@ -50,7 +50,7 @@ def main():
         activity = None
         if text:
             state_text = text if len(text) <= 120 else text[:120] + "..."
-            activity = {"state": state_text, "assets": {"large_image": "default", "large_text": "Linux demo"}}
+            activity = {"state": state_text, "assets": {}}
         payload = {"cmd": "SET_ACTIVITY", "args": {"pid": os.getpid(), "activity": activity}, "nonce": str(time.time())}
         send(client, 1, payload)
         print("Set activity:", recv(client))
