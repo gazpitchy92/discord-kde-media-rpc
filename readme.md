@@ -4,6 +4,8 @@ A tool that displays your current KDE media player status as Discord Rich Presen
 
 NOTE: This does NOT work with Discord installed via Flatpak - use the native package or AppImage
 
+![Discord RPC Example](https://i.postimg.cc/hGWTbvbC/rpc-2.png)
+
 ## Features
 
 - Shows currently playing media from KDE media players in your Discord status
