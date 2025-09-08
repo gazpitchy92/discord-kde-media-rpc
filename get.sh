@@ -25,6 +25,9 @@ while true; do
     else
         > "$base_dir/playing.txt"
     fi
+    if [[ $(grep -o '-' "$base_dir/playing.txt" | wc -l) -ge 2 ]]; then
+        sed -i 's/^[^-]*- *//' "$base_dir/playing.txt"
+    fi
 
     sleep 5
 done
