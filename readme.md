@@ -1,29 +1,26 @@
 # Discord KDE Media RPC
-
 A tool that displays your current KDE media player status as Discord Rich Presence.
 
-NOTE: This does NOT work with Discord installed via Flatpak - use the native package or AppImage
+**NOTE:** This does NOT work with Discord installed via Flatpak - use the native package or AppImage
 
 ![Discord RPC Example](https://i.postimg.cc/hGWTbvbC/rpc-2.png)
 ![Discord RPC Activity Example](https://i.postimg.cc/G352qzgG/rpc3.png)
 
 ## Features
-
 - Shows currently playing media from KDE media players in your Discord status
 - Automatic startup integration
 - Real-time media information sync
+- **File blacklist support** - Hide specific artists or titles from appearing in Discord
 
 ## Installation
 
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/gazpitchy92/discord-kde-media-rpc.git
 cd discord-kde-media-rpc
 ```
 
 ### 2. Set Up Discord Application
-
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
 2. Click "New Application" and give it a name
 3. Copy the **Application ID** from the General Information page
@@ -31,20 +28,37 @@ cd discord-kde-media-rpc
 5. Replace the contents with your Application ID
 
 ### 3. Set Permissions
-
 Make the scripts executable:
-
 ```bash
 chmod +x get.sh
 chmod +x set.py
 ```
 
-### 4. Configure Startup
+### 4. Configure File Blacklist (Optional)
+Create a `blacklist.txt` file in the project directory to hide specific content:
 
+```bash
+touch blacklist.txt
+```
+
+Add keywords (one per line) that you want to filter out:
+```
+Spotify Ad
+Advertisement
+Unwanted Artist Name
+Private Playlist
+Explicit Content
+```
+
+**How the blacklist works:**
+- If the artist or title matches any of these keywords, they will not be shown in Discord
+- Matching is case-insensitive and supports partial matches
+- Leave the file empty or delete it to disable filtering
+
+### 5. Configure Startup
 To automatically start the RPC service when your system boots:
 
 #### Using KDE Autostart Settings
-
 1. Open **System Settings**
 2. Navigate to **Startup and Shutdown** → **Autostart**
 3. Click **Add...** → **Add Application**
@@ -52,14 +66,12 @@ To automatically start the RPC service when your system boots:
 5. Click **OK**
 
 #### Using Autostart Directory (Alternative)
-
 1. Copy the script to your autostart directory:
    ```bash
    cp get.sh ~/.config/autostart/
    ```
 
 #### Using Systemd (Alternative)
-
 1. Create a systemd user service:
    ```bash
    mkdir -p ~/.config/systemd/user
@@ -91,23 +103,33 @@ To automatically start the RPC service when your system boots:
 ## Usage
 
 ### Manual Start
-
 ```bash
 ./get.sh
 ```
 
-### Check Status
+### Managing the Blacklist
+Edit the `blacklist.txt` file to add or remove filtered content:
+```bash
+nano blacklist.txt
+```
 
+Example blacklist entries:
+- `Spotify Ad` - Blocks Spotify advertisements
+- `Unknown Artist` - Hides media with missing metadata
+- `Personal Recording` - Filters out private content
+- `Explicit` - Blocks explicit content markers
+
+### Check Status
 If using systemd:
 ```bash
 systemctl --user status discord-kde-rpc.service
 ```
 
 ## Requirements
-
 - KDE Plasma desktop environment
 - Discord desktop application
 - playerctl
+- Python 3
 
 ## Troubleshooting
 
@@ -132,9 +154,23 @@ systemctl --user status discord-kde-rpc.service
   - **Firefox**: [Plasma Integration](https://addons.mozilla.org/en-GB/firefox/addon/plasma-integration/)
 - Restart your browser after installing the extension
 
-### Logs
+**Blacklist not working:**
+- Ensure `blacklist.txt` exists in the same directory as the scripts
+- Check that the keywords match exactly (partial matches are supported)
+- Verify the script has read permissions for the blacklist file
 
+### Logs
 Check system logs for errors:
 ```bash
 journalctl --user -u discord-kde-rpc.service -f
+```
+
+## File Structure
+```
+discord-kde-media-rpc/
+├── get.sh              # Main script
+├── set.py              # Discord RPC handler
+├── discord.appid       # Your Discord Application ID
+├── blacklist.txt       # Optional: Keywords to filter out
+└── README.md           # This file
 ```
