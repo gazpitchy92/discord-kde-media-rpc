@@ -35,10 +35,10 @@ chmod +x set.py
 ```
 
 ### 4. Configure File Blacklist (Optional)
-Create a `blacklist.txt` file in the project directory to hide specific content:
+Create a `blacklist` file in the project directory to hide specific content:
 
 ```bash
-touch blacklist.txt
+touch blacklist
 ```
 
 Add keywords (one per line) that you want to filter out:
@@ -108,9 +108,9 @@ To automatically start the RPC service when your system boots:
 ```
 
 ### Managing the Blacklist
-Edit the `blacklist.txt` file to add or remove filtered content:
+Edit the `blacklist` file to add or remove filtered content:
 ```bash
-nano blacklist.txt
+nano blacklist
 ```
 
 Example blacklist entries:
@@ -155,7 +155,7 @@ systemctl --user status discord-kde-rpc.service
 - Restart your browser after installing the extension
 
 **Blacklist not working:**
-- Ensure `blacklist.txt` exists in the same directory as the scripts
+- Ensure `blacklist` exists in the same directory as the scripts
 - Check that the keywords match exactly (partial matches are supported)
 - Verify the script has read permissions for the blacklist file
 
@@ -171,6 +171,6 @@ discord-kde-media-rpc/
 ├── get.sh              # Main script
 ├── set.py              # Discord RPC handler
 ├── discord.appid       # Your Discord Application ID
-├── blacklist.txt       # Optional: Keywords to filter out
+├── blacklist           # Optional: Keywords to filter out
 └── README.md           # This file
 ```
