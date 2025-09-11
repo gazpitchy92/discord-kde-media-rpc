@@ -17,9 +17,11 @@ while true; do
     title=$(playerctl metadata --format '{{ title }}' 2>/dev/null)
     metadata=$(playerctl metadata 2>/dev/null | awk '{$1=$1;print}' | tr '\n' ' ')
     
-    if grep -Fqi -f "$base_dir/blacklist" <<< "$metadata"; then
+    if match=$(grep -Fio -f "$base_dir/blacklist" <<< "$metadata"); then
+        echo "Blacklisted source: $match"
         > "$base_dir/playing.txt"
     else
+        echo "Allowed source"
         if [[ -n "$artist" && -n "$title" ]]; then
             echo "$artist - $title" > "$base_dir/playing.txt"
         elif [[ -n "$artist" ]]; then
