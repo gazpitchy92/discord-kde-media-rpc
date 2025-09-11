@@ -21,7 +21,6 @@ while true; do
         echo "Blacklisted source: $match"
         > "$base_dir/playing.txt"
     else
-        echo "Allowed source"
         if [[ -n "$artist" && -n "$title" ]]; then
             echo "$artist - $title" > "$base_dir/playing.txt"
         elif [[ -n "$artist" ]]; then
