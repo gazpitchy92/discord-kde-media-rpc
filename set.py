@@ -57,7 +57,7 @@ def main():
         client = connect_discord(client_id)
         try:
             while True:
-                # probe connection every loop
+
                 try:
                     send(client, 1, {"cmd": "PING", "args": {}, "nonce": str(time.time())})
                     recv(client)

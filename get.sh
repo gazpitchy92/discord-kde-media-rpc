@@ -15,8 +15,9 @@ while true; do
 
     artist=$(playerctl metadata --format '{{ artist }}' 2>/dev/null)
     title=$(playerctl metadata --format '{{ title }}' 2>/dev/null)
-
-    if grep -iq -f "$base_dir/blacklist" <<< "$artist $title"; then
+    metadata=$(playerctl metadata 2>/dev/null | awk '{$1=$1;print}' | tr '\n' ' ')
+    
+    if grep -Fqi -f "$base_dir/blacklist" <<< "$metadata"; then
         > "$base_dir/playing.txt"
     else
         if [[ -n "$artist" && -n "$title" ]]; then
